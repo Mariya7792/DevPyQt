@@ -23,11 +23,11 @@ class Ui_Form(object):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(332, 233)
-        self.NumberButton = QLineEdit(Form)
-        self.NumberButton.setObjectName(u"NumberButton")
-        self.NumberButton.setGeometry(QRect(0, 20, 331, 21))
-        self.NumberButton.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.NumberButton.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.Display_field = QLineEdit(Form)
+        self.Display_field.setObjectName(u"Display_field")
+        self.Display_field.setGeometry(QRect(0, 20, 331, 21))
+        self.Display_field.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.Display_field.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.layoutWidget = QWidget(Form)
         self.layoutWidget.setObjectName(u"layoutWidget")
         self.layoutWidget.setGeometry(QRect(0, 60, 249, 92))
@@ -120,10 +120,10 @@ class Ui_Form(object):
 
         self.horizontalLayout_2.addWidget(self.MinusButton)
 
-        self.MultipleButton = QPushButton(self.layoutWidget_2)
-        self.MultipleButton.setObjectName(u"MultipleButton")
+        self.MultiplyButton = QPushButton(self.layoutWidget_2)
+        self.MultiplyButton.setObjectName(u"MultiplyButton")
 
-        self.horizontalLayout_2.addWidget(self.MultipleButton)
+        self.horizontalLayout_2.addWidget(self.MultiplyButton)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
@@ -141,7 +141,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.NumberButton.setText("")
+        self.Display_field.setText("")
         self.pushButton_1.setText(QCoreApplication.translate("Form", u"1", None))
         self.pushButton_2.setText(QCoreApplication.translate("Form", u"2", None))
         self.pushButton_3.setText(QCoreApplication.translate("Form", u"3", None))
@@ -155,7 +155,7 @@ class Ui_Form(object):
         self.PlusButton.setText(QCoreApplication.translate("Form", u"+", None))
         self.DivisionButton.setText(QCoreApplication.translate("Form", u"/", None))
         self.MinusButton.setText(QCoreApplication.translate("Form", u"-", None))
-        self.MultipleButton.setText(QCoreApplication.translate("Form", u"*", None))
+        self.MultiplyButton.setText(QCoreApplication.translate("Form", u"*", None))
         self.ResultButton.setText(QCoreApplication.translate("Form", u"=", None))
     # retranslateUi
 
