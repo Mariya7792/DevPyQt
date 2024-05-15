@@ -17,7 +17,7 @@ class Window(QtWidgets.QWidget):
         self.ui.pushButton_7.clicked.connect(self.button7)
         self.ui.pushButton_8.clicked.connect(self.button8)
         self.ui.pushButton_9.clicked.connect(self.button9)
-        self.ui.DeleteButton.clicked.connect(self.clearbutton)
+        self.ui.DeleteButton.clicked.connect(self.clear_button)
         self.ui.PlusButton.clicked.connect(self.summ)
         self.ui.MinusButton.clicked.connect(self.minus)
         self.ui.DivisionButton.clicked.connect(self.division)
@@ -62,7 +62,7 @@ class Window(QtWidgets.QWidget):
         input_text = self.ui.pushButton_9.text()
         self.ui.Display_field.insert(input_text)
 
-    def clearbutton(self):
+    def clear_button(self):
         self.ui.Display_field.clear()
 
     def summ(self):
@@ -82,9 +82,12 @@ class Window(QtWidgets.QWidget):
         self.ui.Display_field.insert(input_text)
 
     def equals(self):
-        input_text = self.ui.Display_field.text()
-        ans = eval(input_text)
-        self.ui.Display_field.setText(str(ans))
+        try:
+            input_text = self.ui.Display_field.text()
+            ans = eval(input_text)
+            self.ui.Display_field.setText(str(ans))
+        except SyntaxError:
+            self.ui.Display_field.setText('Error')
 
 
 if __name__ == "__main__":

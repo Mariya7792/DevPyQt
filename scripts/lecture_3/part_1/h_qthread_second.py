@@ -19,7 +19,7 @@ class Worker(QtCore.QThread):
 
         for i in range(5):
             time.sleep(1)
-            self.progress.emit(i + 1)
+            self.progress.emit(i + 2)
 
 
 class Window(QtWidgets.QWidget):

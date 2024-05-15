@@ -96,7 +96,7 @@ class Ui_Form(object):
 
         self.DeleteButton = QPushButton(Form)
         self.DeleteButton.setObjectName(u"DeleteButton")
-        self.DeleteButton.setGeometry(QRect(250, 60, 75, 24))
+        self.DeleteButton.setGeometry(QRect(250, 62, 75, 24))
         self.layoutWidget_2 = QWidget(Form)
         self.layoutWidget_2.setObjectName(u"layoutWidget_2")
         self.layoutWidget_2.setGeometry(QRect(0, 160, 322, 61))
