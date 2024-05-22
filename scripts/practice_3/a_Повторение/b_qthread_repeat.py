@@ -15,21 +15,20 @@
 """
 import time
 from PySide6 import QtWidgets, QtCore
-import requests
+from requests import get
 
-class Worker(QtCore.QThread):
-    progress = QtCore.Signal(int)
-    def __init__(self, parent):
-    #     self.timer = QtCore.QTimer()
-    #     self.timer.setInterval(1000)
-    #     self.timer.timeout.connect(self.view_print)
-    #     super.__init__(parent)
+class GetUrlStatusThread(QtCore.QThread):
+    status_code = QtCore.Signal(int)
+    def __init__(self, url=None, delay=5, parent=None):
+        super().__init__(parent)
+        self.url = url
+        self.delay = delay
+
 
     def run(self) -> None:
         while True:
-            for i in range(10):
-                time.sleep(0.2)
-            print('Прошла сек')
+            self.status_code.emit(get_status_code(self.url))
+            time.sleep(self.delay)
     #     self.timer = QtCore.QTimer()
     #     self.timer.setInterval(1000)
     #     self.timer.timeout.connect(self.view_print)
@@ -39,24 +38,48 @@ class Worker(QtCore.QThread):
     #     time.sleep(2)
     #     print('Прошла сек')
 
-
+def get_status_code(url):
+    response = get(url)
+    return response.status_code
 class Window(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.timer = Worker()
-        self.timer.run()
+        self.initUi()
+        self.__init_Threads()
+        self.__init_Signals()
+    # def get_status_code(url):
+    #     response = get(url)
+    #     return response.status_code
+
+    def initUi(self):
+        self.lineEditUrl = QtWidgets.QLineEdit()
+        self.lineEditUrl.setPlaceholderText('Введите url')
+        self.spinboxDely = QtWidgets.QSpinBox()
+        self.spinboxDely.setMaximum(5)
+        self.labelStatus = QtWidgets.QLabel()
+        self.labelStatus.setText('Статус сайта:')
+        self.TextEditlog = QtWidgets.QTextEdit()
+        self.pushButton_ = QtWidgets.QPushButton('Клик')
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(self.lineEditUrl)
+        layout.addWidget(self.spinboxDely)
+        layout.addWidget(self.labelStatus)
+        layout.addWidget(self.TextEditlog)
+        layout.addWidget(self.pushButton_)
 
 
-    # def initUi(self):
-    #     self.label = QtWidgets.QLabel("Выполнение долгой задачи: ")
-    #     self.pushbutton = QtWidgets.QPushButton('Запуск долгой задачи')
-    #
-    #     layout = QtWidgets.QVBoxLayout()
-    #     layout.addWidget(self.label)
-    #     layout.addWidget(self.pushbutton)
-    #
-    #     self.setLayout(layout)
+        self.setLayout(layout)
+    def __init_Signals(self):
+        self.getUrlStatusThread.status_code.connect(self.__changeStatus)
+    def __init_Threads(self):
+        url = self.lineEditUrl.text()
+        self.getUrlStatusThread = GetUrlStatusThread()
+        self.getUrlStatusThread.url = url
+        self.getUrlStatusThread.delay = self.spinboxDely.value()
+        self.getUrlStatusThread.start()
+    def __changeStatus(self, status):
+        self.TextEditlog.append(status)
 
 
 if __name__ == "__main__":
