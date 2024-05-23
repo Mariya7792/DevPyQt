@@ -8,14 +8,17 @@
 При выводе события указывать время, когда произошло событие.
 """
 
-from PySide6 import QtWidgets
-
+from PySide6 import QtWidgets, QtCore
+from time import ctime
 
 class Window(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
+    def event(self, event:QtCore.QEvent):
+        print(ctime(), event)
+        return super().event(event)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication()

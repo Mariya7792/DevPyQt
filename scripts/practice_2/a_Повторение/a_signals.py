@@ -33,10 +33,6 @@ class Window(QtWidgets.QWidget):
         else:
             self.ui.lineEdit_3.setText('Отжато')
 
-
-
-
-
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
 
