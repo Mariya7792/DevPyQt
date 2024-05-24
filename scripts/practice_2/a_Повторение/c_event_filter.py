@@ -18,7 +18,7 @@ class Window(QtWidgets.QWidget):
         self.initUi()
     def initUi(self):
         self.setFixedSize(300, 100)
-        self.label = QtWidgets.QLabel("Красивая кнопка")
+        self.label = QtWidgets.QLabel('<font color="red"> Красивая </font> <font color="blue"> кнопка </font>')
         self.label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label.installEventFilter(self)
 
@@ -26,8 +26,10 @@ class Window(QtWidgets.QWidget):
         layout.addWidget(self.label)
         self.setLayout(layout)
     def eventFilter(self, watched, event):
-        if watched == self.label and event.type
+        if watched == self.label and event.type() == QtCore.QEvent.Type.MouseButtonPress:
+            print('mouse pressed')
 
+        return super(Window, self).eventFilter(watched, event)
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
 
