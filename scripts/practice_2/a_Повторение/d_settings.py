@@ -17,17 +17,17 @@ class Window(QtWidgets.QWidget):
         super().__init__(parent)
         self.settings = QtCore.QSettings()
         self.initUI()
-        self.settings_()
 
     def initUI(self):
         self.setFixedSize(300, 100)
+        settings_ = self.
         self.text_ = QtWidgets.QPlainTextEdit()
         layout = QtWidgets.QVBoxLayout()
         layout.addWidget(self.text_)
         self.setLayout(layout)
 
-    def settings_(self):
-        self.text_.("Text", self.text_.toPlainText())
+    # def settings_(self):
+    #     self.text_.("Text", self.text_.toPlainText())
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         """
