@@ -1,6 +1,7 @@
 import datetime
 import json
 from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6.QtCore import QDeadlineTimer
 from notes import Ui_MainWindow
 import json
 
@@ -23,46 +24,57 @@ class Window(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self._initSignals()
+        self.saved_notes = {}
+        self.file = {"saved_notes": self.saved_notes}
+        self.save_note()
         self.create_note()
-        self.add_note()
-        # self.saved_notes = {}
-    def create_note(self):
-        pass
-        # with open("data.json", "w", encoding="utf-8") as file:
-        #     self.file = {"saved_notes": self.saved_notes}
-        #     json.dump(self.file, file)
 
+        try:
+            with open("data.json", "r", encoding="utf8") as file:
+                self.file = json.load(file)
+                self.saved_notes = self.file['notes_dict']
+        except:
+            with open("data.json", "w", encoding="utf-8") as file:
+                self.file = {'notes_dict': self.saved_notes}
+                json.dump(self.file, file, indent=4)
+    def create_note(self):
+        self.ui.NotesText.clear()
+        self.ui.DeadlineData.setDateTime(datetime.datetime.now())
+        self.ui.CurrentDate.setDateTime(datetime.datetime.now())
+        #done
     def _initSignals(self):
-        self.ui.AddButton.clicked.connect(self.add_note)
-        self.ui.ChangeButton.clicked.connect(self.change_note)
+        self.ui.AddButton.clicked.connect(self.create_note)
+        self.ui.SaveButton.clicked.connect(lambda: self.save_note)
         self.ui.DeleteButton.clicked.connect(self.delete_note)
-    def add_note(self):
-        # input_text = self.ui.NotesText.textChanged()
-        time_added = datetime.datetime.now()
-        data_to_deadline = self.ui.DeadlineData.dateTime()
-        self.notes_dict = {"date": time_added,
-                           "text": self.ui.NotesText.setPlainText,
-                           "deadline": self.ui.DeadlineData.dateTime(),
-                           "time until deadline": data_to_deadline
-                           }
-        self.draw_list_menu()
+    def save_note(self):
+        current_data = self.ui.CurrentDate.text()
+        deadline = self.ui.DeadlineData.text()
+        if not self.saved_notes:
+            self.saved_notes[1] = {"date": current_data,
+                                   "text": self.ui.NotesText.toPlainText(),
+                                   "deadline": deadline
+                                   }
+        else:
+            key = len(self.saved_notes) + 1
+            self.saved_notes[key] = {"date": current_data,
+                                     "text": self.ui.NotesText.toPlainText(),
+                                     "deadline": deadline
+                                     }
         with open("data.json", "w", encoding="utf-8") as file:
-            self.file = {'notes_dict': self.notes_dict}
-    def change_note(self):
-        pass
+            self.file = {'notes_dict': self.saved_notes}
+            json.dump(self.file, file, indent=4)
+        # self.draw_list_menu()
         # self.ui.
     def delete_note(self):
         pass
-    def draw_list_menu(self):
+    def show_list_menu(self):
         self.ui.NotesStorage.clear()
-        for element in list(self.notes_dict):
-
+        # for element in list(self.notes_dict):
 
 if __name__ ==  "__main__":
     app = QtWidgets.QApplication()
 
     window = Window()
     window.show()
-
     app.exec()
 
